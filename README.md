@@ -107,10 +107,3 @@ This project heavily utilizes:
 > All dependencies are listed in `requirements.txt`.
 
 ---
-
-## 📂 Project Structure
-
-```bash
-skillshetra/hacker101-ctf/
-│
-├── 01_A_little_something_to_get_you_started.py
