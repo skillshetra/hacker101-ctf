@@ -1,0 +1,1 @@
+print(f"\033[32m[001] This is just a demo instance with no flags will help to solve Ticketastic Live Instance.\033[0m")
