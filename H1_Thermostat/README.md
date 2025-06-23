@@ -17,7 +17,7 @@ In this challenge, you're given an APK file for an Android app. The goal is to r
 
 To inspect the app’s code, start by uploading the APK file to a reliable Java decompiler like [Decompiler.com](https://www.javadecompilers.com/apk).
 
-![Upload APK to Java Decompiler](images/1.png)
+![Upload APK to Java Decompiler](1.png)
 
 ---
 
@@ -25,10 +25,11 @@ To inspect the app’s code, start by uploading the APK file to a reliable Java 
 
 Once the APK is decompiled, download the **ZIP file** containing the source code.
 
-![Download Decompiled ZIP](images/2.png)
+![Download Decompiled ZIP](2.png)
 
 ---
 
 ### 🔍 Step 3: Look for the Flag in Decompiled Code
 
 Unzip the downloaded file and navigate to the following path:
+![Look for flag](3.png)
